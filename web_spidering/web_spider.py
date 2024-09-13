@@ -7,13 +7,13 @@ def crawler(start_url, max_pages = 100):
     conn = sqlite3.connect("web_spidering/crawled_pages.db")
     c = conn.cursor()
 
-    c.execute('''
+    c.execute("""
         CREATE TABLE IF NOT EXISTS pages (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             url TEXT UNIQUE,
             content TEXT
         )
-    ''')
+    """)
     conn.commit()
 
     url_frontier = [start_url]
