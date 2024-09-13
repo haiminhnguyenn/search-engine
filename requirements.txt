@@ -2,3 +2,6 @@ nltk
 requests
 beautifulsoup4
 flask
+networkx
+numpy
+scipy
