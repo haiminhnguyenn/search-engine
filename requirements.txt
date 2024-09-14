@@ -5,3 +5,4 @@ flask
 networkx
 numpy
 scipy
+scikit-learn
