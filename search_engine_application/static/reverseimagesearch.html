@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reverse Image Search</title>
+    <link rel="stylesheet" type="text/css" href="./static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1> Reverse Image Search Engine</h1>
+        <form method="POST" enctype="multipart/form-data" action="/reverseimagesearchresult">
+            <input type="file" name="query_img"> <br>
+            <button type="submit"> Submit</button>
+            <br>
+        </form>
+
+        <h2> Query:</h2>
+        {% if query_path %}
+        <img src = "{{ query_path }}" width="300px">
+        {% endif %}
+
+        <h2> Results: </h2>
+        {% for score in scores %}
+        <figure style = "float: left; margin-right: 20px; margin-bottom: 20px;">
+            <img src = "{{score[1]}}" height = "200px">
+        </figure>
+        {% endfor%}
+    </div>
+</body>
+</html>
