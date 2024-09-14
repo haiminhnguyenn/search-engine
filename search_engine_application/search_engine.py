@@ -3,6 +3,7 @@ import pickle
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import networkx as nx
+import json
 
 
 app = Flask(__name__, template_folder="./static/")
@@ -11,6 +12,11 @@ app = Flask(__name__, template_folder="./static/")
 @app.route("/")
 def websearch():
     return render_template("websearch.html")
+
+
+@app.route("/imagesearch")
+def imagesearch():
+    return render_template("imagesearch.html")
 
 
 @app.route("/a")
@@ -78,6 +84,32 @@ def web_search():
         
         top_results = [x[0] for x in ranked_results if x[1] >= 0.14]
         return render_template("results.html", data=[top_results, query])
+    
+    
+@app.route("/search_images", methods=["GET", "POST"])
+def search_images():
+    if request.method == "POST":
+        query = request.form["query"].lower()
+        
+        if query == "":
+            return render_template("imagesearch.html")
+        
+        with open("images.json", "r") as f:
+            images = json.load(f)
+
+        #Search for images with alt text and title that contain the query term
+        results = []
+        
+        for img in images:
+            if query in img["alt_text"] or query in img["title"]:
+                results.append(img)
+            else:
+                continue
+        
+        if len(results) == 0:
+            return render_template("notfound.html")
+        
+        return render_template("imageresults.html", data=[results, query])
 
 
 def load_tokenized_text(filename):
