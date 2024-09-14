@@ -6,3 +6,6 @@ networkx
 numpy
 scipy
 scikit-learn
+tensorflow
+pillow
+keras-preprocessing
